@@ -1,0 +1,80 @@
+<html><head><title>MoveShape.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="sourcestyles.css" />
+</head><body link="blue" vlink="blue">
+<h3>File: /Users/shatabdi/Education/GitHub/se450_project/src/model/shape/MoveShape.java</h3>
+<SCRIPT>
+defaultStatus = "File: /Users/shatabdi/Education/GitHub/se450_project/src/model/shape/MoveShape.java";
+top.document.title  = "MoveShape.java";
+</SCRIPT>
+<pre><span class="default"></span><a name="1"><font size=-1>1     </font></a><span class="default"></span><span class="keyword">package </span><span class="default">model.<a href="dictionary_M.html#17">shape</a>;</span>
+<a name="2"><font size=-1>2     </font></a><span class="default"></span>
+<a name="3"><font size=-1>3     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">model.<a href="dictionary_M.html#49">interfaces</a>.<a href="dictionary_M.html#234">IObserver</a>;</span>
+<a name="4"><font size=-1>4     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">model.<a href="dictionary_M.html#49">interfaces</a>.<a href="dictionary_M.html#95">IShape</a>;</span>
+<a name="5"><font size=-1>5     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">model.<a href="dictionary_M.html#16">others</a>.<a href="dictionary_M.html#178">PaintObservable</a>;</span>
+<a name="6"><font size=-1>6     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">model.<a href="dictionary_M.html#16">others</a>.<a href="dictionary_M.html#13">ShapeRepository</a>;</span>
+<a name="7"><font size=-1>7     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">view.<a href="dictionary_V.html#161">interfaces</a>.<a href="dictionary_V.html#159">IDrawCanvas</a>;</span>
+<a name="8"><font size=-1>8     </font></a><span class="default"></span>
+<a name="9"><font size=-1>9     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.<a href="dictionary_J.html#41">awt</a>.*;</span>
+<a name="10"><font size=-1>10     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.awt.<a href="dictionary_J.html#309">geom</a>.<a href="dictionary_J.html#606">AffineTransform</a>;</span>
+<a name="11"><font size=-1>11     </font></a><span class="default"></span>
+<a name="12"><font size=-1>12     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">controller.<a href="dictionary_C.html#18">interfaces</a>.<a href="dictionary_C.html#160">IUndoable</a>;</span>
+<a name="13"><font size=-1>13     </font></a><span class="default"></span>
+<a name="14"><font size=-1>14     </font></a><span class="default"></span><span class="keyword">public class <a href="dictionary_M.html#524">MoveShape</a> implements <a href="dictionary_C.html#160">IUndoable</a> </span><span class="default">{</span>
+<a name="15"><font size=-1>15     </font></a><span class="default"></span>
+<a name="16"><font size=-1>16     </font></a><span class="default">    <a href="dictionary_M.html#178">PaintObservable</a> <a href="dictionary_M.html#729">paintObservable</a>;</span>
+<a name="17"><font size=-1>17     </font></a><span class="default">    </span><span class="keyword">private <a href="dictionary_P.html#27">Point</a> <a href="dictionary_M.html#731">ptStart</a></span><span class="default">;</span>
+<a name="18"><font size=-1>18     </font></a><span class="default">    </span><span class="keyword">private <a href="dictionary_P.html#27">Point</a> <a href="dictionary_M.html#730">ptEnd</a> </span><span class="default">= </span><span class="keyword">new <a href="dictionary_P.html#27">Point</a></span><span class="default">();</span>
+<a name="19"><font size=-1>19     </font></a><span class="default">    </span><span class="keyword">private <a href="dictionary_P.html#27">Point</a> <a href="dictionary_M.html#732">transformOffset</a></span><span class="default">;</span>
+<a name="20"><font size=-1>20     </font></a><span class="default">    </span><span class="keyword">public <a href="dictionary_M.html#529">MoveShape</a></span><span class="default">(<a href="dictionary_P.html#27">Point</a> <a href="dictionary_M.html#715">startPoint</a>, <a href="dictionary_P.html#27">Point</a> <a href="dictionary_M.html#716">transformOffset</a>, <a href="dictionary_V.html#159">IDrawCanvas</a> <a href="dictionary_M.html#713">paintCanvas</a>, <a href="dictionary_M.html#178">PaintObservable</a> <a href="dictionary_M.html#714">paintObservable</a>) {</span>
+<a name="21"><font size=-1>21     </font></a><span class="default">        <a href="dictionary_M.html#713">paintCanvas</a>.<a href="dictionary_V.html#289">getGraphics2D</a>();</span>
+<a name="22"><font size=-1>22     </font></a><span class="default">        </span><span class="keyword">this</span><span class="default">.<a href="dictionary_M.html#732">transformOffset</a> = <a href="dictionary_M.html#716">transformOffset</a>;</span>
+<a name="23"><font size=-1>23     </font></a><span class="default">        </span><span class="keyword">this</span><span class="default">.<a href="dictionary_M.html#731">ptStart</a> = <a href="dictionary_M.html#715">startPoint</a>;</span>
+<a name="24"><font size=-1>24     </font></a><span class="default"></span>
+<a name="25"><font size=-1>25     </font></a><span class="default">        </span><span class="keyword">this</span><span class="default">.<a href="dictionary_M.html#729">paintObservable</a> = <a href="dictionary_M.html#714">paintObservable</a>;</span>
+<a name="26"><font size=-1>26     </font></a><span class="default">        <a href="dictionary_M.html#714">paintObservable</a>.<a href="dictionary_M.html#248">addObserver</a>((IObserver) <a href="dictionary_M.html#713">paintCanvas</a>);</span>
+<a name="27"><font size=-1>27     </font></a><span class="default">    }</span>
+<a name="28"><font size=-1>28     </font></a><span class="default"></span>
+<a name="29"><font size=-1>29     </font></a><span class="default"></span>
+<a name="30"><font size=-1>30     </font></a><span class="default"></span>
+<a name="31"><font size=-1>31     </font></a><span class="default">    </span><span class="keyword">public void <a href="dictionary_M.html#530">move</a></span><span class="default">() {</span>
+<a name="32"><font size=-1>32     </font></a><span class="default">        <a href="dictionary_M.html#721">translate</a>(<a href="dictionary_M.html#732">transformOffset</a>.<a href="dictionary_X.html#303">x</a>, <a href="dictionary_M.html#732">transformOffset</a>.<a href="dictionary_Y.html#304">y</a>);</span>
+<a name="33"><font size=-1>33     </font></a><span class="default">    }</span>
+<a name="34"><font size=-1>34     </font></a><span class="default"></span>
+<a name="35"><font size=-1>35     </font></a><span class="default">    </span><span class="keyword">public void <a href="dictionary_M.html#721">translate</a></span><span class="default">(</span><span class="keyword">int <a href="dictionary_M.html#724">x</a></span><span class="default">, </span><span class="keyword">int <a href="dictionary_M.html#725">y</a></span><span class="default">) {</span>
+<a name="36"><font size=-1>36     </font></a><span class="default">        <a href="dictionary_J.html#606">AffineTransform</a> <a href="dictionary_M.html#723">transform</a> = </span><span class="keyword">new <a href="dictionary_J.html#606">AffineTransform</a></span><span class="default">();</span>
+<a name="37"><font size=-1>37     </font></a><span class="default"></span>
+<a name="38"><font size=-1>38     </font></a><span class="default">        <a href="dictionary_M.html#723">transform</a>.<a href="dictionary_T.html#640">translate</a>(<a href="dictionary_M.html#724">x</a>, <a href="dictionary_M.html#725">y</a>);</span>
+<a name="39"><font size=-1>39     </font></a><span class="default"></span>
+<a name="40"><font size=-1>40     </font></a><span class="default">        </span><span class="keyword">for </span><span class="default">(<a href="dictionary_M.html#95">IShape</a> <a href="dictionary_M.html#722">selectedShape</a> : <a href="dictionary_M.html#13">ShapeRepository</a>.<a href="dictionary_M.html#23">selectedCollection</a>.<a href="dictionary_M.html#24">getList</a>()) {</span>
+<a name="41"><font size=-1>41     </font></a><span class="default">            <a href="dictionary_M.html#722">selectedShape</a>.<a href="dictionary_M.html#666">moveShape</a>(<a href="dictionary_M.html#724">x</a>, <a href="dictionary_M.html#725">y</a>);</span>
+<a name="42"><font size=-1>42     </font></a><span class="default">        }</span>
+<a name="43"><font size=-1>43     </font></a><span class="default"></span>
+<a name="44"><font size=-1>44     </font></a><span class="default">        <a href="dictionary_M.html#729">paintObservable</a>.<a href="dictionary_M.html#180">notifyUpdate</a>();</span>
+<a name="45"><font size=-1>45     </font></a><span class="default">    }</span>
+<a name="46"><font size=-1>46     </font></a><span class="default"></span>
+<a name="47"><font size=-1>47     </font></a><span class="default">    </span><span class="keyword">public void <a href="dictionary_M.html#525">setEndPoint</a></span><span class="default">(<a href="dictionary_P.html#27">Point</a> <a href="dictionary_M.html#720">endPoint</a>) {</span>
+<a name="48"><font size=-1>48     </font></a><span class="default">        </span><span class="keyword">this</span><span class="default">.<a href="dictionary_M.html#730">ptEnd</a> = <a href="dictionary_M.html#720">endPoint</a>;</span>
+<a name="49"><font size=-1>49     </font></a><span class="default">    }</span>
+<a name="50"><font size=-1>50     </font></a><span class="default"></span>
+<a name="51"><font size=-1>51     </font></a><span class="default"></span>
+<a name="52"><font size=-1>52     </font></a><span class="default"></span>
+<a name="53"><font size=-1>53     </font></a><span class="default">    @<a href="dictionary_O.html#2">Override</a></span>
+<a name="54"><font size=-1>54     </font></a><span class="default">    </span><span class="keyword">public void <a href="dictionary_M.html#726">undo</a></span><span class="default">() {</span>
+<a name="55"><font size=-1>55     </font></a><span class="default">        </span><span class="keyword">int <a href="dictionary_M.html#727">offsetXX</a> </span><span class="default">= <a href="dictionary_M.html#731">ptStart</a>.<a href="dictionary_X.html#303">x</a> - <a href="dictionary_M.html#730">ptEnd</a>.<a href="dictionary_X.html#303">x</a>;</span>
+<a name="56"><font size=-1>56     </font></a><span class="default">        </span><span class="keyword">int <a href="dictionary_M.html#728">offsetYY</a> </span><span class="default">= <a href="dictionary_M.html#731">ptStart</a>.<a href="dictionary_Y.html#304">y</a> - <a href="dictionary_M.html#730">ptEnd</a>.<a href="dictionary_Y.html#304">y</a>;</span>
+<a name="57"><font size=-1>57     </font></a><span class="default"></span>
+<a name="58"><font size=-1>58     </font></a><span class="default">        <a href="dictionary_M.html#721">translate</a>(<a href="dictionary_M.html#727">offsetXX</a>, <a href="dictionary_M.html#728">offsetYY</a>);</span>
+<a name="59"><font size=-1>59     </font></a><span class="default">    }</span>
+<a name="60"><font size=-1>60     </font></a><span class="default"></span>
+<a name="61"><font size=-1>61     </font></a><span class="default"></span>
+<a name="62"><font size=-1>62     </font></a><span class="default">    @<a href="dictionary_O.html#2">Override</a></span>
+<a name="63"><font size=-1>63     </font></a><span class="default">    </span><span class="keyword">public void <a href="dictionary_M.html#717">redo</a></span><span class="default">() {</span>
+<a name="64"><font size=-1>64     </font></a><span class="default">        </span><span class="keyword">int <a href="dictionary_M.html#718">translateXX</a> </span><span class="default">= <a href="dictionary_M.html#730">ptEnd</a>.<a href="dictionary_X.html#303">x</a> - <a href="dictionary_M.html#731">ptStart</a>.<a href="dictionary_X.html#303">x</a>;</span>
+<a name="65"><font size=-1>65     </font></a><span class="default">        </span><span class="keyword">int <a href="dictionary_M.html#719">translateYY</a> </span><span class="default">= <a href="dictionary_M.html#730">ptEnd</a>.<a href="dictionary_Y.html#304">y</a> - <a href="dictionary_M.html#731">ptStart</a>.<a href="dictionary_Y.html#304">y</a>;</span>
+<a name="66"><font size=-1>66     </font></a><span class="default"></span>
+<a name="67"><font size=-1>67     </font></a><span class="default">        <a href="dictionary_M.html#721">translate</a>(<a href="dictionary_M.html#718">translateXX</a>, <a href="dictionary_M.html#719">translateYY</a>);</span>
+<a name="68"><font size=-1>68     </font></a><span class="default">    }</span>
+<a name="69"><font size=-1>69     </font></a><span class="default">}</span>
+<a name="70"><font size=-1>70     </font></a><span class="default"></span>
+</pre></body></html>

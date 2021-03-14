@@ -1,0 +1,28 @@
+<html><head><title>UndoCommand.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="sourcestyles.css" />
+</head><body link="blue" vlink="blue">
+<h3>File: /Users/shatabdi/Education/GitHub/se450_project/src/model/commands/UndoCommand.java</h3>
+<SCRIPT>
+defaultStatus = "File: /Users/shatabdi/Education/GitHub/se450_project/src/model/commands/UndoCommand.java";
+top.document.title  = "UndoCommand.java";
+</SCRIPT>
+<pre><span class="default"></span><a name="1"><font size=-1>1     </font></a><span class="default"></span><span class="keyword">package </span><span class="default">model.<a href="dictionary_M.html#12">commands</a>;</span>
+<a name="2"><font size=-1>2     </font></a><span class="default"></span>
+<a name="3"><font size=-1>3     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">controller.<a href="dictionary_C.html#18">interfaces</a>.<a href="dictionary_C.html#15">ICommand</a>;</span>
+<a name="4"><font size=-1>4     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">model.<a href="dictionary_M.html#16">others</a>.<a href="dictionary_M.html#172">Undo</a>;</span>
+<a name="5"><font size=-1>5     </font></a><span class="default"></span>
+<a name="6"><font size=-1>6     </font></a><span class="default"></span><span class="keyword">public class <a href="dictionary_M.html#357">UndoCommand</a> implements <a href="dictionary_C.html#15">ICommand</a> </span><span class="default">{</span>
+<a name="7"><font size=-1>7     </font></a><span class="default">    <a href="dictionary_M.html#172">Undo</a> <a href="dictionary_M.html#361">undo</a>;</span>
+<a name="8"><font size=-1>8     </font></a><span class="default"></span>
+<a name="9"><font size=-1>9     </font></a><span class="default">    </span><span class="keyword">public <a href="dictionary_M.html#358">UndoCommand</a></span><span class="default">(<a href="dictionary_M.html#172">Undo</a> <a href="dictionary_M.html#359">undo</a>) {</span>
+<a name="10"><font size=-1>10     </font></a><span class="default">        </span><span class="keyword">this</span><span class="default">.<a href="dictionary_M.html#361">undo</a> = <a href="dictionary_M.html#359">undo</a>;</span>
+<a name="11"><font size=-1>11     </font></a><span class="default">    }</span>
+<a name="12"><font size=-1>12     </font></a><span class="default"></span>
+<a name="13"><font size=-1>13     </font></a><span class="default">    @<a href="dictionary_O.html#2">Override</a></span>
+<a name="14"><font size=-1>14     </font></a><span class="default">    </span><span class="keyword">public void <a href="dictionary_M.html#360">run</a></span><span class="default">() {</span>
+<a name="15"><font size=-1>15     </font></a><span class="default">        <a href="dictionary_M.html#361">undo</a>.<a href="dictionary_M.html#175">run</a>();</span>
+<a name="16"><font size=-1>16     </font></a><span class="default">    }</span>
+<a name="17"><font size=-1>17     </font></a><span class="default">}</span>
+<a name="18"><font size=-1>18     </font></a><span class="default"></span>
+</pre></body></html>
