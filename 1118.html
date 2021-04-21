@@ -1,0 +1,50 @@
+<html><head><title>Gui.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="sourcestyles.css" />
+</head><body link="blue" vlink="blue">
+<h3>File: /Users/shatabdi/Education/GitHub/se450_project/src/view/Gui.java</h3>
+<SCRIPT>
+defaultStatus = "File: /Users/shatabdi/Education/GitHub/se450_project/src/view/Gui.java";
+top.document.title  = "Gui.java";
+</SCRIPT>
+<pre><span class="default"></span><a name="1"><font size=-1>1     </font></a><span class="default"></span><span class="keyword">package <a href="dictionary_V.html#2">view</a></span><span class="default">;</span>
+<a name="2"><font size=-1>2     </font></a><span class="default"></span>
+<a name="3"><font size=-1>3     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">javax.<a href="dictionary_J.html#9">swing</a>.<a href="dictionary_J.html#8">JButton</a>;</span>
+<a name="4"><font size=-1>4     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">javax.<a href="dictionary_J.html#9">swing</a>.<a href="dictionary_J.html#1134">JOptionPane</a>;</span>
+<a name="5"><font size=-1>5     </font></a><span class="default"></span>
+<a name="6"><font size=-1>6     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">view.<a href="dictionary_V.html#3">Enum</a>.EventName;</span>
+<a name="7"><font size=-1>7     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">view.<a href="dictionary_V.html#10">interfaces</a>.<a href="dictionary_V.html#387">IButtonListener</a>;</span>
+<a name="8"><font size=-1>8     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">view.<a href="dictionary_V.html#10">interfaces</a>.<a href="dictionary_V.html#44">IDialogChoice</a>;</span>
+<a name="9"><font size=-1>9     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">view.<a href="dictionary_V.html#10">interfaces</a>.<a href="dictionary_V.html#5">IGuiWindow</a>;</span>
+<a name="10"><font size=-1>10     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">view.<a href="dictionary_V.html#10">interfaces</a>.<a href="dictionary_V.html#267">IUiModule</a>;</span>
+<a name="11"><font size=-1>11     </font></a><span class="default"></span>
+<a name="12"><font size=-1>12     </font></a><span class="default"></span><span class="keyword">public class <a href="dictionary_V.html#264">Gui</a> implements <a href="dictionary_V.html#267">IUiModule</a> </span><span class="default">{</span>
+<a name="13"><font size=-1>13     </font></a><span class="default"></span>
+<a name="14"><font size=-1>14     </font></a><span class="default">    </span><span class="keyword">private final <a href="dictionary_V.html#5">IGuiWindow</a> <a href="dictionary_V.html#1133">iGuiWindow</a></span><span class="default">;</span>
+<a name="15"><font size=-1>15     </font></a><span class="default"></span>
+<a name="16"><font size=-1>16     </font></a><span class="default">    </span><span class="keyword">public <a href="dictionary_V.html#271">Gui</a></span><span class="default">(<a href="dictionary_V.html#5">IGuiWindow</a> <a href="dictionary_V.html#1119">gui</a>) {</span>
+<a name="17"><font size=-1>17     </font></a><span class="default">        </span><span class="keyword">this</span><span class="default">.<a href="dictionary_V.html#1133">iGuiWindow</a> = <a href="dictionary_V.html#1119">gui</a>;</span>
+<a name="18"><font size=-1>18     </font></a><span class="default">    }</span>
+<a name="19"><font size=-1>19     </font></a><span class="default"></span>
+<a name="20"><font size=-1>20     </font></a><span class="default">    @<a href="dictionary_O.html#14">Override</a></span>
+<a name="21"><font size=-1>21     </font></a><span class="default">    </span><span class="keyword">public void <a href="dictionary_V.html#1120">addEvent</a></span><span class="default">(EventName <a href="dictionary_V.html#1125">eventName</a>, <a href="dictionary_V.html#387">IButtonListener</a> <a href="dictionary_V.html#1124">callback</a>) {</span>
+<a name="22"><font size=-1>22     </font></a><span class="default">        <a href="dictionary_J.html#8">JButton</a> <a href="dictionary_V.html#1126">selectedButton</a> = <a href="dictionary_V.html#1133">iGuiWindow</a>.<a href="dictionary_V.html#6">getButton</a>(<a href="dictionary_V.html#1125">eventName</a>);</span>
+<a name="23"><font size=-1>23     </font></a><span class="default">        <a href="dictionary_V.html#1126">selectedButton</a>.<a href="dictionary_A.html#1123">addActionListener</a>(<a href="dictionary_V.html#1122">ActionEvent</a> -&gt; <a href="dictionary_V.html#1124">callback</a>.<a href="dictionary_V.html#1031">run</a>());</span>
+<a name="24"><font size=-1>24     </font></a><span class="default">    }</span>
+<a name="25"><font size=-1>25     </font></a><span class="default"></span>
+<a name="26"><font size=-1>26     </font></a><span class="default">    @<a href="dictionary_S.html#1135">SuppressWarnings</a>(</span><span class="string">&quot;unchecked&quot;</span><span class="default">)</span>
+<a name="27"><font size=-1>27     </font></a><span class="default">	@<a href="dictionary_O.html#14">Override</a></span>
+<a name="28"><font size=-1>28     </font></a><span class="default">    </span><span class="keyword">public </span><span class="default">&lt;<a href="dictionary_V.html#1128">T</a>&gt; <a href="dictionary_V.html#1128">T</a> <a href="dictionary_V.html#1127">getDialogChoiceResponse</a>(<a href="dictionary_V.html#44">IDialogChoice</a> <a href="dictionary_V.html#1131">dialogChoiceSettings</a>) {</span>
+<a name="29"><font size=-1>29     </font></a><span class="default">        Object <a href="dictionary_V.html#1132">selectedValue</a> = <a href="dictionary_J.html#1134">JOptionPane</a>.<a href="dictionary_S.html#1129">showInputDialog</a>(</span><span class="keyword">null</span><span class="default">,</span>
+<a name="30"><font size=-1>30     </font></a><span class="default">                <a href="dictionary_V.html#1131">dialogChoiceSettings</a>.<a href="dictionary_V.html#49">getDialogText</a>(), <a href="dictionary_V.html#1131">dialogChoiceSettings</a>.<a href="dictionary_V.html#50">getDialogTitle</a>(),</span>
+<a name="31"><font size=-1>31     </font></a><span class="default">                <a href="dictionary_J.html#1134">JOptionPane</a>.<a href="dictionary_P.html#1130">PLAIN_MESSAGE</a>,</span>
+<a name="32"><font size=-1>32     </font></a><span class="default">                </span><span class="keyword">null</span><span class="default">,</span>
+<a name="33"><font size=-1>33     </font></a><span class="default">                <a href="dictionary_V.html#1131">dialogChoiceSettings</a>.<a href="dictionary_V.html#48">getDialogOptions</a>(),</span>
+<a name="34"><font size=-1>34     </font></a><span class="default">                <a href="dictionary_V.html#1131">dialogChoiceSettings</a>.<a href="dictionary_V.html#46">getCurrentSelection</a>());</span>
+<a name="35"><font size=-1>35     </font></a><span class="default">        </span><span class="keyword">return <a href="dictionary_V.html#1132">selectedValue</a> </span><span class="default">== </span><span class="keyword">null</span>
+<a name="36"><font size=-1>36     </font></a><span class="keyword">                </span><span class="default">? (T) <a href="dictionary_V.html#1131">dialogChoiceSettings</a>.<a href="dictionary_V.html#46">getCurrentSelection</a>()</span>
+<a name="37"><font size=-1>37     </font></a><span class="default">                : (T) <a href="dictionary_V.html#1132">selectedValue</a>;</span>
+<a name="38"><font size=-1>38     </font></a><span class="default">    }</span>
+<a name="39"><font size=-1>39     </font></a><span class="default">}</span>
+<a name="40"><font size=-1>40     </font></a><span class="default"></span>
+</pre></body></html>
